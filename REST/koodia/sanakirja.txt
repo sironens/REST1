@@ -1,0 +1,7 @@
+talo house
+auto car
+kirja book
+kissa cat
+koira dog
+hyökkäys attack
+puolustus defense

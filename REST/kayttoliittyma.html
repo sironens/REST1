@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $('[name="Submit"]').click(function (e) {
+          alert("lähetys");
+
+          const data = {
+            fin: $("#fin").val(),
+            eng: $("#eng").val(),
+          };
+
+          $.ajax({
+            type: "POST",
+            url: "http://localhost:3000/sanakirja",
+            dataType: "json",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+          })
+            .done((data) => {
+              console.log({ data });
+            })
+            .fail((err) => {
+              console.error(err);
+            })
+            .always(() => {
+              console.log("always called");
+            });
+        });
+        $('[name="Search"]').click(function (e) {
+          var haettava = $("#haku").val();
+          $.ajax({
+            type: "GET",
+            url: "http://localhost:3000/sanakirja/" + haettava,
+            success: function (data) {
+              alert(data);
+            },
+          });
+        });
+        e.preventDefault();
+      });
+    </script>
+    <title>Sanakirja</title>
+  </head>
+  <body>
+    <form name="form">
+      <label for="fin">Suomeksi: </label>
+      <input type="text" id="fin" name="fin" />
+      <label for="eng"> Englanniksi: </label>
+      <input type="text" id="eng" name="eng" />
+      <input name="Submit" type="button" value="Tallenna" /><br /><br /><br />
+      <label for="haku">Hae sana englanniksi: </label>
+      <input type="text" id="haku" name="haku" />
+      <input type="button" name="Search" value="Hae" />
+    </form>
+  </body>
+</html>
